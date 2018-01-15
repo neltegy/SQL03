@@ -3,19 +3,13 @@
 각 사원(employee)에 대해서 사번(employee_id), 이름(first_name),
 부서명(department_name), 매니저(manager)의 이름(first_name)을 조회하세요.
 */
-select em.first_name
-from employees em,employees ma --,departments de
-where em.manager_id =ma.employee_id;
- -- and de.department_id = ma.employee_id;
-
-select *
-from employees
-order by employee_id;
-
-select *
-from employees em,employees ma
-where em.employee_id = ma.manager_id
-order by em.employee_id;
+select em.employee_id
+      ,em.first_name
+      ,department_name
+      ,ma.first_name
+from employees em,employees ma ,departments de
+where em.employee_id =ma.manager_id
+  and ma.department_id = de.department_id;
 
 /*
 문제2.
@@ -37,43 +31,29 @@ order by region_name desc, country_name desc;
 보세요.
 //11개
 */
-select em.department_id
-      ,department_name
-      ,city
-      ,country_name
-      ,region_name
-from employees em
+select de.department_id
+      ,de.department_name
+      ,ma.first_name
+      ,lo.city
+      ,CO.COUNTRY_NAME
+      ,re.region_name
+from employees ma
     ,departments de
     ,locations lo
     ,countries co
     ,regions re
-where em.employee_id = de.manager_id
+where ma.employee_id = de.manager_id
   and de.location_id = lo.location_id
   and lo.country_id = co.country_id
   and co.region_id = re.region_id;
 
-SELECT *--distinct manager_id 
-FROM departments de
-;
-SELECT *
-FROM employees
-
-;
-
-
-
-
 /*
-
-
 문제4.
 ‘Public Accountant’의 직책(job_title)으로 과거에 근무한 적이 있는 모든 사원의 사번과
 이름을 출력하세요. (현재 ‘Public Accountant’의 직책(job_title)으로 근무하는 사원은
 고려하지 않습니다.) 이름은 first_name과 last_name을 합쳐 출력합니다.
 //2명
 */
-select *
-from jobs;
 
 select jo.employee_id
        ,first_name||last_name
